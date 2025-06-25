@@ -97,49 +97,77 @@ function displayProductDetail(product) {
 function createProductGallery(product) {
     const images = [];
     
-    // Add main image
+    // Add main image first
     if (product.image) {
         images.push(product.image);
     }
     
-    // Add gallery images
+    // Add gallery images (filter out duplicates with main image)
     if (product.gallery && Array.isArray(product.gallery)) {
-        images.push(...product.gallery);
+        product.gallery.forEach(img => {
+            if (img && img !== product.image && !images.includes(img)) {
+                images.push(img);
+            }
+        });
     }
     
-    if (images.length === 0) {
+    // Remove any empty or undefined images
+    const validImages = images.filter(img => img && img.trim() !== '');
+    
+    if (validImages.length === 0) {
         return `
             <div class="product-detail-image">
                 <div class="d-flex align-items-center justify-content-center bg-light" style="height: 400px;">
                     <i class="fas fa-image fa-5x text-muted"></i>
+                    <div class="ms-3">
+                        <h5 class="text-muted">No Images Available</h5>
+                        <p class="text-muted mb-0">Product images will be displayed here</p>
+                    </div>
                 </div>
             </div>
         `;
     }
     
-    if (images.length === 1) {
+    if (validImages.length === 1) {
         return `
             <div class="product-detail-image">
-                <img src="${images[0]}" alt="${product.title}" class="img-fluid w-100" style="height: 400px; object-fit: cover;" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg=='">
+                <img src="${validImages[0]}" alt="${product.title}" class="img-fluid w-100" style="height: 400px; object-fit: cover; border-radius: 15px;" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg=='">
             </div>
         `;
     }
     
-    // Multiple images - create carousel
-    const slidesHTML = images.map(image => `
+    // Multiple images - create carousel with thumbnails
+    const slidesHTML = validImages.map((image, index) => `
         <div class="swiper-slide">
-            <img src="${image}" alt="${product.title}" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg=='">
+            <img src="${image}" alt="${product.title} - Image ${index + 1}" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlICR7index + 1fTwvdGV4dD48L3N2Zz4K'">
+        </div>
+    `).join('');
+    
+    const thumbnailsHTML = validImages.map((image, index) => `
+        <div class="swiper-slide thumbnail-slide">
+            <img src="${image}" alt="Thumbnail ${index + 1}" class="thumbnail-img" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMiIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPiR7index + 1}</dGV4dD48L3N2Zz4K'">
         </div>
     `).join('');
     
     return `
-        <div class="swiper product-carousel">
-            <div class="swiper-wrapper">
-                ${slidesHTML}
+        <div class="product-gallery-container">
+            <div class="swiper product-carousel main-carousel">
+                <div class="swiper-wrapper">
+                    ${slidesHTML}
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
             </div>
-            <div class="swiper-pagination"></div>
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
+            <div class="swiper product-thumbnails mt-3">
+                <div class="swiper-wrapper">
+                    ${thumbnailsHTML}
+                </div>
+            </div>
+            <div class="image-counter mt-2 text-center">
+                <small class="text-muted">
+                    <span class="current-slide">1</span> / ${validImages.length} images
+                </small>
+            </div>
         </div>
     `;
 }
@@ -160,20 +188,46 @@ function createTagsHTML(tags) {
 
 // Initialize image carousel
 function initializeCarousel() {
-    const swiper = new Swiper('.product-carousel', {
-        loop: true,
-        pagination: {
-            el: '.swiper-pagination',
-            clickable: true,
-        },
+    // Initialize thumbnail carousel first
+    const thumbnailSwiper = new Swiper('.product-thumbnails', {
+        spaceBetween: 10,
+        slidesPerView: 'auto',
+        freeMode: true,
+        watchSlidesProgress: true,
+        breakpoints: {
+            320: { slidesPerView: 3 },
+            640: { slidesPerView: 4 },
+            768: { slidesPerView: 5 },
+            1024: { slidesPerView: 6 }
+        }
+    });
+
+    // Initialize main carousel
+    const mainSwiper = new Swiper('.main-carousel', {
+        spaceBetween: 10,
         navigation: {
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev',
         },
-        autoplay: {
-            delay: 5000,
-            disableOnInteraction: false,
+        thumbs: {
+            swiper: thumbnailSwiper,
         },
+        on: {
+            slideChange: function() {
+                // Update counter
+                const counter = document.querySelector('.current-slide');
+                if (counter) {
+                    counter.textContent = this.activeIndex + 1;
+                }
+            }
+        }
+    });
+
+    // Add click handlers for thumbnails
+    document.querySelectorAll('.thumbnail-slide').forEach((thumb, index) => {
+        thumb.addEventListener('click', () => {
+            mainSwiper.slideTo(index);
+        });
     });
 }
 

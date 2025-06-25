@@ -274,6 +274,14 @@ function createProductCard(product) {
         cardBody.appendChild(price);
     }
     
+    // Availability status
+    const availability = document.createElement('div');
+    availability.className = `availability-status ${product.available ? 'available-text' : 'unavailable-text'}`;
+    availability.innerHTML = product.available ? 
+        '<i class="fas fa-check-circle"></i> Available' : 
+        '<i class="fas fa-times-circle"></i> Out of Stock';
+    cardBody.appendChild(availability);
+    
     // Description
     if (product.description) {
         const description = document.createElement('p');
