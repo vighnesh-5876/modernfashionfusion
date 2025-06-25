@@ -58,12 +58,18 @@ function displayProductDetail(product) {
             <div class="product-info">
                 <div class="mb-3">
                     <span class="product-category">${product.category ? product.category.charAt(0).toUpperCase() + product.category.slice(1) : 'Uncategorized'}</span>
-                    ${product.available ? '<span class="availability-badge available ms-2">Available</span>' : '<span class="availability-badge unavailable ms-2">Sold Out</span>'}
                 </div>
                 
                 <h1 class="product-detail-title">${product.title}</h1>
                 
                 ${product.price ? `<div class="product-detail-price">₹${product.price}</div>` : ''}
+                
+                <div class="availability-status-detail">
+                    ${product.available ? 
+                        '<span class="availability-dot available-dot"></span> In Stock' : 
+                        '<span class="availability-dot unavailable-dot"></span> Out of Stock'
+                    }
+                </div>
                 
                 <div class="product-description mt-4">
                     <p>${product.description || 'No description available.'}</p>

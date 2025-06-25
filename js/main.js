@@ -234,11 +234,7 @@ function createProductCard(product) {
         imageDiv.innerHTML = '<div class="d-flex align-items-center justify-content-center h-100 bg-light"><i class="fas fa-image fa-3x text-muted"></i></div>';
     }
     
-    // Availability badge
-    const availabilityBadge = document.createElement('div');
-    availabilityBadge.className = `availability-badge ${product.available ? 'available' : 'unavailable'}`;
-    availabilityBadge.textContent = product.available ? 'Available' : 'Sold Out';
-    imageDiv.appendChild(availabilityBadge);
+    // Remove availability badge from top of card
     
     // Featured badge
     if (product.featured) {
@@ -274,12 +270,12 @@ function createProductCard(product) {
         cardBody.appendChild(price);
     }
     
-    // Availability status
+    // Availability status with modern design
     const availability = document.createElement('div');
-    availability.className = `availability-status ${product.available ? 'available-text' : 'unavailable-text'}`;
+    availability.className = 'availability-status';
     availability.innerHTML = product.available ? 
-        '<i class="fas fa-check-circle"></i> Available' : 
-        '<i class="fas fa-times-circle"></i> Out of Stock';
+        '<span class="availability-dot available-dot"></span> In Stock' : 
+        '<span class="availability-dot unavailable-dot"></span> Out of Stock';
     cardBody.appendChild(availability);
     
     // Description
