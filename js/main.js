@@ -28,7 +28,7 @@ async function loadSiteData() {
             about_description: 'We are passionate about creating timeless fashion pieces that combine style, comfort, and quality.',
             primary_color: '#0d6efd',
             secondary_color: '#6c757d',
-            whatsapp_number: '8879403922',
+            whatsapp_number: '+918879403922',
             instagram_id: 'qwiktech.in'
         };
         applySiteData();
@@ -187,20 +187,18 @@ function displayFeaturedProducts() {
     const featuredContainer = document.getElementById('featured-products');
     if (!featuredContainer) return;
 
-    const featuredProducts = productsData.filter(product => product.featured);
+    let featuredProducts = productsData.filter(product => product.featured === true);
     
     if (featuredProducts.length === 0) {
         // Show first 3 products if no featured products
-        featuredProducts.push(...productsData.slice(0, 3));
+        featuredProducts = productsData.slice(0, 3);
     }
 
     featuredContainer.innerHTML = '';
     
     featuredProducts.forEach(product => {
-        const col = document.createElement('div');
-        col.className = 'col-lg-4 col-md-6 mb-4';
-        col.appendChild(createProductCard(product));
-        featuredContainer.appendChild(col);
+        const productCard = createProductCard(product);
+        featuredContainer.appendChild(productCard);
     });
 }
 
@@ -212,6 +210,13 @@ function createProductCard(product) {
     const card = document.createElement('div');
     card.className = 'product-card';
     card.dataset.category = product.category || 'uncategorized';
+    card.dataset.slug = product.slug || product.title;
+    card.style.cursor = 'pointer';
+    
+    // Make entire card clickable
+    card.addEventListener('click', function() {
+        window.location.href = `product-detail.html?product=${encodeURIComponent(product.slug || product.title)}`;
+    });
     
     // Image
     const imageDiv = document.createElement('div');
@@ -277,12 +282,11 @@ function createProductCard(product) {
         cardBody.appendChild(description);
     }
     
-    // View Details Button
-    const button = document.createElement('a');
-    button.href = `product-detail.html?product=${encodeURIComponent(product.slug || product.title)}`;
-    button.className = 'btn btn-primary mt-auto';
-    button.textContent = 'View Details';
-    cardBody.appendChild(button);
+    // Optional: Add a subtle indicator that the card is clickable
+    const clickIndicator = document.createElement('small');
+    clickIndicator.className = 'text-muted mt-auto';
+    clickIndicator.innerHTML = '<i class="fas fa-eye"></i> Click to view details';
+    cardBody.appendChild(clickIndicator);
     
     card.appendChild(imageDiv);
     card.appendChild(cardBody);
@@ -314,7 +318,7 @@ function setupContactButtons() {
         whatsappContact.addEventListener('click', function(e) {
             e.preventDefault();
             const message = encodeURIComponent('Hello! I would like to know more about your fashion collection.');
-            const whatsappUrl = `https://wa.me/${siteData.whatsapp_number || '8879403922'}?text=${message}`;
+            const whatsappUrl = `https://wa.me/${siteData.whatsapp_number || '+918879403922'}?text=${message}`;
             window.open(whatsappUrl, '_blank');
         });
     }

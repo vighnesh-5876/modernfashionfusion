@@ -67,16 +67,28 @@
         </div>
     </section>
 
-    <!-- Filters -->
+    <!-- Filters and Sorting -->
     <section class="py-4">
         <div class="container">
             <div class="row">
-                <div class="col-12">
+                <div class="col-md-8">
                     <div class="d-flex flex-wrap gap-2 mb-4">
                         <button class="btn btn-outline-primary filter-btn active" data-category="all">All</button>
                         <button class="btn btn-outline-primary filter-btn" data-category="sarees">Sarees</button>
                         <button class="btn btn-outline-primary filter-btn" data-category="kurtis">Kurtis</button>
                         <button class="btn btn-outline-primary filter-btn" data-category="blouses">Blouses</button>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="mb-4">
+                        <label for="sortSelect" class="form-label fw-bold">Sort by:</label>
+                        <select class="form-select" id="sortSelect">
+                            <option value="newest">Newest First</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="name-az">Name: A to Z</option>
+                            <option value="name-za">Name: Z to A</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -126,6 +138,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             loadProducts();
             setupFilters();
+            setupSorting();
             
             // Check for category parameter in URL
             const urlCategory = getUrlParameter('category');
@@ -157,6 +170,42 @@
             });
         }
 
+        function setupSorting() {
+            const sortSelect = document.getElementById('sortSelect');
+            if (sortSelect) {
+                sortSelect.addEventListener('change', function() {
+                    sortProducts(this.value);
+                });
+            }
+        }
+
+        function sortProducts(sortType) {
+            const productsGrid = document.getElementById('products-grid');
+            const productCards = Array.from(productsGrid.children);
+            
+            productCards.sort((a, b) => {
+                const productA = productsData.find(p => p.slug === a.querySelector('.product-card').dataset.slug);
+                const productB = productsData.find(p => p.slug === b.querySelector('.product-card').dataset.slug);
+                
+                switch(sortType) {
+                    case 'newest':
+                        return new Date(productB.date) - new Date(productA.date);
+                    case 'price-low':
+                        return (productA.price || 0) - (productB.price || 0);
+                    case 'price-high':
+                        return (productB.price || 0) - (productA.price || 0);
+                    case 'name-az':
+                        return (productA.title || '').localeCompare(productB.title || '');
+                    case 'name-za':
+                        return (productB.title || '').localeCompare(productA.title || '');
+                    default:
+                        return 0;
+                }
+            });
+            
+            productCards.forEach(card => productsGrid.appendChild(card));
+        }
+
         function filterProducts(category) {
             const productCards = document.querySelectorAll('.product-card');
             let visibleCount = 0;
@@ -164,10 +213,10 @@
             productCards.forEach(card => {
                 const productCategory = card.dataset.category;
                 if (category === 'all' || productCategory === category) {
-                    card.style.display = 'block';
+                    card.parentElement.style.display = 'block';
                     visibleCount++;
                 } else {
-                    card.style.display = 'none';
+                    card.parentElement.style.display = 'none';
                 }
             });
             

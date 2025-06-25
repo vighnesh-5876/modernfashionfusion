@@ -7,7 +7,7 @@ about_title: "About Our Studio"
 about_description: "We are passionate about creating timeless fashion pieces that combine style, comfort, and quality. Each design tells a story and reflects our commitment to excellence in fashion."
 primary_color: "#0d6efd"
 secondary_color: "#6c757d"
-whatsapp_number: "8879403922"
+whatsapp_number: "+918879403922"
 instagram_id: "qwiktech.in"
 ---
 

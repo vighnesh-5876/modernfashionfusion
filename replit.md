@@ -98,11 +98,20 @@ This is a static fashion designer website built with HTML, CSS, and JavaScript. 
 - **Alternative**: Node.js http-server package
 - **Hot Reload**: Manual refresh required (no build process)
 
+## Recent Changes
+
+- **June 25, 2025** - Navigation Enhancement: Added Categories dropdown with Sarees, Kurtis, Blouses
+- **June 25, 2025** - Product Sorting: Implemented sort by newest, price (low to high, high to low), and alphabetical (A-Z, Z-A)
+- **June 25, 2025** - UX Improvements: Made entire product cards clickable, not just buttons
+- **June 25, 2025** - Demo Content: Created 6 sample products with custom SVG placeholder images
+- **June 25, 2025** - Contact Integration: Updated WhatsApp number to +918879403922 format
+- **June 25, 2025** - Featured Products: Fixed display logic for homepage featured section
+
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
 
 ## Changelog
 
-Changelog:
-- June 25, 2025. Initial setup
+- June 25, 2025. Initial setup with complete fashion website architecture
+- June 25, 2025. Added category navigation, product sorting, and enhanced user experience

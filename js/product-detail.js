@@ -185,7 +185,7 @@ function setupPurchaseButtons(product) {
     if (whatsappBtn) {
         whatsappBtn.addEventListener('click', function() {
             const message = createPurchaseMessage(product);
-            const whatsappUrl = `https://wa.me/${siteData.whatsapp_number || '8879403922'}?text=${encodeURIComponent(message)}`;
+            const whatsappUrl = `https://wa.me/${siteData.whatsapp_number || '+918879403922'}?text=${encodeURIComponent(message)}`;
             window.open(whatsappUrl, '_blank');
             
             // Close modal
