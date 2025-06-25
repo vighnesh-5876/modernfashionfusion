@@ -98,29 +98,31 @@ async function loadProducts() {
 async function fetchProductsFromDirectory() {
     const products = [];
     
-    // This is a simplified approach - in a real static site generator,
-    // you would have the product data available at build time
-    try {
-        // Try to load some sample product files
-        const productFiles = ['sample-dress.md', 'sample-top.md', 'sample-accessory.md'];
-        
-        for (const file of productFiles) {
-            try {
-                const response = await fetch(`/content/products/${file}`);
-                if (response.ok) {
-                    const text = await response.text();
-                    const product = parseFrontMatter(text);
-                    if (product.title) {
-                        products.push(product);
-                    }
+    // Demo product files
+    const productFiles = [
+        'elegant-silk-saree.md',
+        'designer-cotton-kurti.md', 
+        'embroidered-blouse.md',
+        'festive-georgette-saree.md',
+        'ethnic-printed-kurti.md',
+        'silk-designer-blouse.md'
+    ];
+    
+    for (const file of productFiles) {
+        try {
+            const response = await fetch(`/content/products/${file}`);
+            if (response.ok) {
+                const text = await response.text();
+                const product = parseFrontMatter(text);
+                if (product.title) {
+                    // Add filename for URL generation
+                    product.slug = file.replace('.md', '');
+                    products.push(product);
                 }
-            } catch (err) {
-                // File doesn't exist, continue
-                continue;
             }
+        } catch (err) {
+            console.log(`Product file ${file} not found, skipping`);
         }
-    } catch (error) {
-        console.error('Error fetching products:', error);
     }
     
     return products;
@@ -277,7 +279,7 @@ function createProductCard(product) {
     
     // View Details Button
     const button = document.createElement('a');
-    button.href = `product-detail.html?product=${encodeURIComponent(product.title)}`;
+    button.href = `product-detail.html?product=${encodeURIComponent(product.slug || product.title)}`;
     button.className = 'btn btn-primary mt-auto';
     button.textContent = 'View Details';
     cardBody.appendChild(button);

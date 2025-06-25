@@ -33,7 +33,7 @@ collections:
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Description", name: "description", widget: "text"}
       - {label: "Price", name: "price", widget: "number", value_type: "float", min: 0}
-      - {label: "Category", name: "category", widget: "select", options: ["dresses", "tops", "bottoms", "accessories"]}
+      - {label: "Category", name: "category", widget: "select", options: ["sarees", "kurtis", "blouses"]}
       - {label: "Available", name: "available", widget: "boolean", default: true}
       - {label: "Featured", name: "featured", widget: "boolean", default: false}
       - {label: "Main Image", name: "image", widget: "image"}

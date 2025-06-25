@@ -18,9 +18,9 @@ async function loadProductDetail() {
         // Wait for products to load
         await loadProducts();
         
-        // Find the product
+        // Find the product by slug or title
         currentProduct = productsData.find(product => 
-            product.title === productTitle
+            product.slug === productTitle || product.title === productTitle
         );
         
         if (currentProduct) {

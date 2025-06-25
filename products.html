@@ -32,7 +32,20 @@
                         <a class="nav-link" href="index.html">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="products.html">Products</a>
+                        <a class="nav-link active" href="products.html">All Products</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Categories
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="products.html?category=sarees">Sarees</a></li>
+                            <li><a class="dropdown-item" href="products.html?category=kurtis">Kurtis</a></li>
+                            <li><a class="dropdown-item" href="products.html?category=blouses">Blouses</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#about">About</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="index.html#contact">Contact</a>
@@ -61,10 +74,9 @@
                 <div class="col-12">
                     <div class="d-flex flex-wrap gap-2 mb-4">
                         <button class="btn btn-outline-primary filter-btn active" data-category="all">All</button>
-                        <button class="btn btn-outline-primary filter-btn" data-category="dresses">Dresses</button>
-                        <button class="btn btn-outline-primary filter-btn" data-category="tops">Tops</button>
-                        <button class="btn btn-outline-primary filter-btn" data-category="bottoms">Bottoms</button>
-                        <button class="btn btn-outline-primary filter-btn" data-category="accessories">Accessories</button>
+                        <button class="btn btn-outline-primary filter-btn" data-category="sarees">Sarees</button>
+                        <button class="btn btn-outline-primary filter-btn" data-category="kurtis">Kurtis</button>
+                        <button class="btn btn-outline-primary filter-btn" data-category="blouses">Blouses</button>
                     </div>
                 </div>
             </div>
@@ -114,6 +126,20 @@
         document.addEventListener('DOMContentLoaded', function() {
             loadProducts();
             setupFilters();
+            
+            // Check for category parameter in URL
+            const urlCategory = getUrlParameter('category');
+            if (urlCategory) {
+                // Wait for products to load, then filter
+                setTimeout(() => {
+                    const filterBtn = document.querySelector(`[data-category="${urlCategory}"]`);
+                    if (filterBtn) {
+                        document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+                        filterBtn.classList.add('active');
+                        filterProducts(urlCategory);
+                    }
+                }, 500);
+            }
         });
 
         function setupFilters() {

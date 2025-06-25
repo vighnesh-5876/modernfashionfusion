@@ -1,0 +1,14 @@
+<svg width="400" height="600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="silkGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#d42a74;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#8f0f4e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4a1a3d;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="400" height="600" fill="url(#silkGradient2)"/>
+  <rect x="0" y="0" width="400" height="50" fill="#ffd700" opacity="0.9"/>
+  <rect x="0" y="550" width="400" height="50" fill="#ffd700" opacity="0.9"/>
+  <path d="M50 200 Q200 100 350 200 T350 400" stroke="#ffd700" stroke-width="3" fill="none" opacity="0.7"/>
+  <text x="200" y="320" font-family="Arial" font-size="16" fill="#ffffff" text-anchor="middle" opacity="0.8">Detailed View</text>
+</svg>

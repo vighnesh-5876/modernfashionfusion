@@ -1,0 +1,17 @@
+<svg width="400" height="600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="silkGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8f0f4e;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#d42a74;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2f1b69;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="400" height="600" fill="url(#silkGradient)"/>
+  <!-- Golden border -->
+  <rect x="0" y="550" width="400" height="50" fill="#ffd700" opacity="0.8"/>
+  <!-- Pattern design -->
+  <circle cx="100" cy="150" r="20" fill="#ffd700" opacity="0.6"/>
+  <circle cx="300" cy="250" r="20" fill="#ffd700" opacity="0.6"/>
+  <circle cx="200" cy="350" r="20" fill="#ffd700" opacity="0.6"/>
+  <text x="200" y="300" font-family="Arial" font-size="18" fill="#ffffff" text-anchor="middle" opacity="0.7">Elegant Silk Saree</text>
+</svg>
