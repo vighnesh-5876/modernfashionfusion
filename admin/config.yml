@@ -1,0 +1,42 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: static/uploads
+public_folder: /static/uploads
+
+collections:
+  - name: "site"
+    label: "Site Settings"
+    files:
+      - file: "content/site.md"
+        label: "Site Configuration"
+        name: "site"
+        fields:
+          - {label: "Site Title", name: "title", widget: "string"}
+          - {label: "Site Description", name: "description", widget: "text"}
+          - {label: "Hero Title", name: "hero_title", widget: "string"}
+          - {label: "Hero Description", name: "hero_description", widget: "text"}
+          - {label: "About Title", name: "about_title", widget: "string"}
+          - {label: "About Description", name: "about_description", widget: "text"}
+          - {label: "Primary Color", name: "primary_color", widget: "color", default: "#0d6efd"}
+          - {label: "Secondary Color", name: "secondary_color", widget: "color", default: "#6c757d"}
+          - {label: "WhatsApp Number", name: "whatsapp_number", widget: "string", default: "8879403922"}
+          - {label: "Instagram ID", name: "instagram_id", widget: "string", default: "qwiktech.in"}
+
+  - name: "products"
+    label: "Products"
+    folder: "content/products"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Description", name: "description", widget: "text"}
+      - {label: "Price", name: "price", widget: "number", value_type: "float", min: 0}
+      - {label: "Category", name: "category", widget: "select", options: ["dresses", "tops", "bottoms", "accessories"]}
+      - {label: "Available", name: "available", widget: "boolean", default: true}
+      - {label: "Featured", name: "featured", widget: "boolean", default: false}
+      - {label: "Main Image", name: "image", widget: "image"}
+      - {label: "Gallery Images", name: "gallery", widget: "list", field: {label: "Image", name: "image", widget: "image"}, required: false}
+      - {label: "Tags", name: "tags", widget: "list", required: false}
+      - {label: "Publish Date", name: "date", widget: "datetime"}
